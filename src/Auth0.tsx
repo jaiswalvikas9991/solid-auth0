@@ -60,6 +60,8 @@ export const Auth0 = (props: Auth0Props): JSX.Element => {
       redirect_uri: props.loginRedirectUri,
       scope: props.scope,
     },
+    useRefreshTokens: props.useRefreshTokens,
+    cacheLocation: props.cacheLocation
   });
 
   // Create signals for the user and authentication status
