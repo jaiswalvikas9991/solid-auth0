@@ -1,4 +1,4 @@
-import { LogoutOptions, RedirectLoginOptions, User, createAuth0Client } from "@auth0/auth0-spa-js"
+import { LogoutOptions, PopupLoginOptions, RedirectLoginOptions, User, createAuth0Client } from "@auth0/auth0-spa-js"
 import { JSX, createContext, createResource, createSignal, mergeProps, useContext } from "solid-js";
 import { Auth0Props } from "./Auth0Props";
 import { Auth0State } from "./Auth0State";
@@ -61,6 +61,7 @@ export const Auth0 = (props: Auth0Props): JSX.Element => {
       scope: props.scope,
     },
     useRefreshTokens: props.useRefreshTokens,
+    useRefreshTokensFallback: props.useRefreshTokensFallback,
     cacheLocation: props.cacheLocation
   });
 
@@ -96,20 +97,34 @@ export const Auth0 = (props: Auth0Props): JSX.Element => {
         loginWithRedirect: async (options?: RedirectLoginOptions) => {
           const client = await auth0ClientPromise;
           client.loginWithRedirect({
+            ...options,
             authorizationParams: {
               redirect_uri: props.loginRedirectUri,
               audience: props.audience,
               scope: props.scope,
-              ...options
+              ...options?.authorizationParams
             }
           })
+        },
+        loginWithPopup: async (options?: PopupLoginOptions) => {
+          const client = await auth0ClientPromise;
+          client.loginWithPopup({
+            ...options,
+            authorizationParams: {
+              redirect_uri: props.loginRedirectUri,
+              audience: props.audience,
+              scope: props.scope,
+              ...options?.authorizationParams
+            }
+          });
         },
         logout: async (options?: LogoutOptions) => {
           const client = await auth0ClientPromise;
           client.logout({
+            ...options,
             logoutParams: {
               returnTo: props.logoutRedirectUri,
-              ...options
+              ...options?.logoutParams
             }
           })
         },

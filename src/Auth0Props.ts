@@ -57,6 +57,7 @@ export type Auth0Props = {
    * **Note**: Use of refresh tokens must be enabled by an administrator on your Auth0 client application.
    */
   useRefreshTokens?: boolean;
+  useRefreshTokensFallback?: boolean;
 
   /**
    * The possible locations where tokens can be stored

@@ -1,4 +1,4 @@
-import { Auth0Client, LogoutOptions, RedirectLoginOptions, User } from '@auth0/auth0-spa-js';
+import { Auth0Client, LogoutOptions, PopupLoginOptions, RedirectLoginOptions, User } from '@auth0/auth0-spa-js';
 
 interface AuthState<TUser extends User = User> {
   error?: Error;
@@ -22,6 +22,8 @@ export interface Auth0State<TUser extends User = User> extends AuthState<TUser> 
    * @param options Optional configuration for the login request.
    */
   loginWithRedirect: (options?: RedirectLoginOptions) => Promise<void>;
+
+  loginWithPopup: (options?: PopupLoginOptions) => Promise<void>;
 
   /**
    * Logs the user out of the Auth0 session.
